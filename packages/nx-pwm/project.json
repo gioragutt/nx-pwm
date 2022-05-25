@@ -49,6 +49,9 @@
         "jestConfig": "packages/nx-pwm/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "depcheck": {
+      "executor": "nx-pwm:depcheck"
     }
   },
   "tags": []

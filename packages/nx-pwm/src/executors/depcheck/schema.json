@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Depcheck executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "missing": {
+      "type": "boolean",
+      "description": "Check for missing dependencies",
+      "default": true
+    },
+    "discrepancies": {
+      "type": "boolean",
+      "description": "Check for version discrepancies between root and project dependencies",
+      "default": true
+    }
+  },
+  "required": []
+}
