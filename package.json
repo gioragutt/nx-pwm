@@ -17,6 +17,7 @@
     "@nrwl/cli": "14.1.9",
     "@nrwl/js": "14.1.9",
     "@nrwl/nx-cloud": "14.0.5",
+    "@nrwl/nx-plugin": "^14.1.9",
     "@nrwl/workspace": "14.1.9",
     "commitizen": "^4.2.4",
     "husky": "^7.0.4",
