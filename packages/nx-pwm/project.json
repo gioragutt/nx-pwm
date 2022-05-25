@@ -52,6 +52,12 @@
     },
     "depcheck": {
       "executor": "nx-pwm:depcheck"
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   },
   "tags": []

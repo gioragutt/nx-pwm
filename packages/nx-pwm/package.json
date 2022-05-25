@@ -1,6 +1,6 @@
 {
   "name": "nx-pwm",
-  "version": "0.0.0-alpha1",
+  "version": "0.0.0",
   "description": "CLI and Plugin to manage NX package workspaces",
   "main": "src/index.js",
   "types": "src/index.d.ts",
