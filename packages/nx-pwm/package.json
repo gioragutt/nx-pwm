@@ -1,0 +1,18 @@
+{
+  "name": "nx-pwm",
+  "version": "0.0.0",
+  "description": "CLI and Plugin to manage NX package workspaces",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Giora Guttsait (gioragutt)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gioragutt/nx-pwm.git",
+    "directory": "packages/nx-pwm"
+  }
+}

@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "esModuleInterop": true,
+    "paths": {
+      "nx-pwm": ["packages/nx-pwm/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

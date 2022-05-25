@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "versionType": {
+      "type": "string",
+      "enum": ["synced", "independent"]
+    },
+    "depcheck": {
+      "type": "object",
+      "properties": {
+        "ignore": {
+          "type": "object",
+          "properties": {
+            "discrepancies": {
+              "$ref": "#/definitions/ignoreConfig"
+            },
+            "missing": {
+              "$ref": "#/definitions/ignoreConfig"
+            }
+          },
+          "required": ["discrepancies", "missing"]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ignoreConfig": {
+      "type": "object",
+      "properties": {
+        "*": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["versionType", "depcheck"]
+}
