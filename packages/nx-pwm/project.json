@@ -1,5 +1,4 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-pwm/src",
   "projectType": "library",
   "targets": {
@@ -57,6 +56,12 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventional"
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },

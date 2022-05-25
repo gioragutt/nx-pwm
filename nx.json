@@ -17,5 +17,13 @@
       }
     }
   },
+  "targetDependencies": {
+    "version": [
+      {
+        "target": "depcheck",
+        "projects": "self"
+      }
+    ]
+  },
   "defaultProject": "nx-pwm"
 }

@@ -25,8 +25,6 @@ export default async function runExecutor(
 
   const packageJsonPath = joinPathFragments(projectRoot, 'package.json');
 
-  console.log(projectName, projectRoot);
-
   if (!fileExists(packageJsonPath)) {
     logger.error(`No package.json found in ${projectName}`);
     return { success: false };
