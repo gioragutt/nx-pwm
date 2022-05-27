@@ -1,5 +1,5 @@
 {
-  "$schema": "./packages/nx-pwm/src/lib/config-schema.json",
+  "$schema": "./packages/nx-pwm/config-schema.json",
   "versionType": "independent",
   "depcheck": {
     "ignore": {

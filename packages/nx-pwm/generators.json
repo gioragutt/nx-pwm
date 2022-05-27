@@ -3,10 +3,10 @@
   "name": "nx-pwm",
   "version": "0.0.1",
   "generators": {
-    "nx-pwm": {
-      "factory": "./src/generators/nx-pwm/generator",
-      "schema": "./src/generators/nx-pwm/schema.json",
-      "description": "nx-pwm generator"
+    "install": {
+      "factory": "./src/generators/install/generator",
+      "schema": "./src/generators/install/schema.json",
+      "description": "Add missing configuration for nx-pwm"
     }
   }
 }

@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/nx-pwm/config-schema.json",
+  "versionType": "<%= versionType %>",
+  "depcheck": {
+    "ignore": {
+      "discrepancies": {
+        "*": []
+      },
+      "missing": {
+        "*": []
+      }
+    }
+  },
+  "local-registry": {
+    "verdaccioConfig": "./.verdaccio/config.yml"
+  }
+}

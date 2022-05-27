@@ -14,14 +14,14 @@ export interface NxPwmConfig {
   };
 }
 
-export function readNxPwmConfig(): NxPwmConfig {
-  const configPath = '.nx-pwm.json';
+export const NX_PWM_CONFIG_PATH = '.nx-pwm.json';
 
-  if (!fileExists(configPath)) {
+export function readNxPwmConfig(): NxPwmConfig {
+  if (!fileExists(NX_PWM_CONFIG_PATH)) {
     throw new Error(
-      `Could not find ${configPath}. Please run 'nx g nx-pwm:init' to create one.`
+      `Could not find ${NX_PWM_CONFIG_PATH}. Please run 'nx g nx-pwm:init' to create one.`
     );
   }
 
-  return readJsonFile(configPath);
+  return readJsonFile(NX_PWM_CONFIG_PATH);
 }

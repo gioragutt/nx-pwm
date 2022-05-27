@@ -1,6 +1,6 @@
 {
-  "extends": "nx/presets/core.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "extends": "nx/presets/core.json",
   "npmScope": "nx-pwm",
   "affected": {
     "defaultBase": "main"
