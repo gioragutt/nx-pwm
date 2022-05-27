@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Install",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "versionType": {
+      "type": "string",
+      "enum": ["synced", "independent"],
+      "x-prompt": "What name would you like to use?"
+    }
+  },
+  "required": ["versionType"]
+}
