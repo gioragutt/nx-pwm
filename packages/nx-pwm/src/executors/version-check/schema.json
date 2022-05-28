@@ -17,7 +17,12 @@
     },
     "updateMigrations": {
       "type": "boolean",
-      "description": "Create or update the migrations.json ",
+      "description": "Create or update the migrations.json",
+      "default": false
+    },
+    "updateVersionsFiles": {
+      "type": "boolean",
+      "description": "Update checked versions files with newer versions",
       "default": false
     }
   },

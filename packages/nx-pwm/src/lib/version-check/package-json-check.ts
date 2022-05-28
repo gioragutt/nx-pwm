@@ -1,77 +1,42 @@
-import { readJsonFile, workspaceRoot } from '@nrwl/devkit';
-import chalk from 'chalk';
-import * as glob from 'glob';
+import { readJsonFile } from '@nrwl/devkit';
+import { fileExists } from 'nx/src/utils/fileutils';
 import { PackageJson } from 'nx/src/utils/package-json';
-import { relative } from 'path';
 import { nameToPackageJson } from '../workspace-utils';
-import { comparePackageVersionToLatest } from './compare-package-version-to-latest';
+import {
+  comparePackageVersionToLatest,
+  VersionComparisonResult,
+} from './compare-package-version-to-latest';
 
-try {
-  const files = glob
-    .sync('libs/**/package.json')
-    .map((x) => relative(workspaceRoot, x));
-  checkFiles(files);
-} catch (e) {
-  console.log(chalk.red(e.message));
-  process.exitCode = 1;
-}
+export async function packageJsonCheck(
+  packageJsonPath: string
+): Promise<VersionComparisonResult[]> {
+  if (!fileExists(packageJsonPath)) {
+    throw new Error(`Could not find ${packageJsonPath}`);
+  }
 
-// -----------------------------------------------------------------------------
-
-async function checkFiles(packageJsonFiles: string[]) {
   const rootPackageJson = readJsonFile<PackageJson>('package.json');
+  const packageJsonContent = readJsonFile<PackageJson>(packageJsonPath);
 
-  console.log(chalk.blue(`Checking versions in the following files...\n`));
-  console.log(`  - ${packageJsonFiles.join('\n  - ')}\n`);
+  const results = await Promise.all(
+    Object.entries({
+      ...packageJsonContent.dependencies,
+      ...packageJsonContent.devDependencies,
+      ...packageJsonContent.peerDependencies,
+    })
+      .filter(([name]) => !nameToPackageJson[name])
+      .map<[name: string, version: string]>(([name, version]) => {
+        if (version !== '*') {
+          return [name, version];
+        }
 
-  const maxFileNameLength = Math.max(...packageJsonFiles.map((f) => f.length));
+        const versionFromRoot: string =
+          rootPackageJson.dependencies?.[name] ??
+          rootPackageJson.devDependencies?.[name];
 
-  let hasError = false;
-
-  for (const f of packageJsonFiles) {
-    const packageJsonContent = readJsonFile<PackageJson>(f);
-
-    const results = await Promise.all(
-      Object.entries({
-        ...packageJsonContent.dependencies,
-        ...packageJsonContent.devDependencies,
+        return [name, versionFromRoot];
       })
-        .filter(([name]) => !nameToPackageJson[name])
-        .map<[name: string, version: string]>(([name, version]) => {
-          if (version !== '*') {
-            return [name, version];
-          }
-          const versionFromRoot: string =
-            rootPackageJson.dependencies?.[name] ??
-            rootPackageJson.devDependencies?.[name];
+      .map(([pkg, version]) => comparePackageVersionToLatest(pkg, version))
+  );
 
-          return [name, versionFromRoot];
-        })
-        .map(([pkg, version]) => comparePackageVersionToLatest(pkg, version))
-    );
-
-    const logContext = `${f.padEnd(maxFileNameLength)}`;
-
-    results.forEach((r) => {
-      if (r.outdated) {
-        console.log(
-          `${logContext} ⚠️ ${chalk.bold(
-            r.package
-          )} has new version ${chalk.bold(r.latest)} (current: ${r.prev})`
-        );
-      }
-      if (r.invalid) {
-        hasError = true;
-        console.log(
-          `${logContext} ❗ ${chalk.bold(r.package)} has an invalid version (${
-            r.prev
-          }) specified. Latest is ${r.latest}.`
-        );
-      }
-    });
-  }
-
-  if (hasError) {
-    throw new Error('Invalid versions of packages found (please see above).');
-  }
+  return results;
 }

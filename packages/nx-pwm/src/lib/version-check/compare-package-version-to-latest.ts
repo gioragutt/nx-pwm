@@ -1,6 +1,6 @@
 import { logger } from '@nrwl/devkit';
 import { exec } from 'child_process';
-import { gt } from 'semver';
+import { gt, coerce } from 'semver';
 import { promisify } from 'util';
 
 const execAsync = promisify(exec);
@@ -18,6 +18,8 @@ export async function comparePackageVersionToLatest(
   version: string
 ): Promise<VersionComparisonResult> {
   try {
+    version = coerce(version).format();
+
     const output = await execAsync(`npm view ${pkg} version --json --silent`);
     const latest = JSON.parse(output.stdout);
 

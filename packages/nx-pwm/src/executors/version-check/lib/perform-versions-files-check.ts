@@ -3,12 +3,13 @@ import chalk from 'chalk';
 import {
   createOrUpdateMigrations,
   NormalizedVersionCheckOptions,
+  updateVersionsFile,
   versionsFilesCheck,
 } from '../../../lib/version-check';
-import { logVersionComparisonResults } from './logging';
 import { VersionCheckExecutorSchema } from '../schema';
+import { logVersionComparisonResults } from './logging';
 
-export async function performVersionsFileCheck(
+export async function performVersionsFilesCheck(
   normalizedConfig: NormalizedVersionCheckOptions,
   projectRoot: string,
   options: VersionCheckExecutorSchema
@@ -21,6 +22,16 @@ export async function performVersionsFileCheck(
   const allComparisons = Object.values(result).flat();
   const invalidComparisons = allComparisons.filter((c) => c.invalid);
   const outdatedComparisons = allComparisons.filter((c) => c.outdated);
+
+  if (!invalidComparisons.length && !outdatedComparisons.length) {
+    logger.info(`✅ All versions are up to date.`);
+    return true;
+  }
+
+  logVersionComparisonResults(
+    result,
+    (c) => `${chalk.bold(c.package)} (${c.variable})`
+  );
 
   if (options.updateMigrations) {
     if (outdatedComparisons.length) {
@@ -39,10 +50,31 @@ export async function performVersionsFileCheck(
     }
   }
 
-  logVersionComparisonResults(
-    result,
-    (c) => `${chalk.bold(c.package)} (${c.variable})`
-  );
+  if (options.updateVersionsFiles) {
+    if (outdatedComparisons.length) {
+      const updatedFiles: string[] = [];
 
-  return invalidComparisons.length > 0 || outdatedComparisons.length > 0;
+      for (const [versionFile, comparisons] of Object.entries(result)) {
+        const outdated = comparisons.filter((c) => c.outdated);
+        if (!outdated.length) {
+          continue;
+        }
+
+        updatedFiles.push(versionFile);
+        updateVersionsFile(versionFile, outdated);
+      }
+
+      output.success({
+        title: 'Updating versions files',
+        bodyLines: updatedFiles,
+      });
+    } else {
+      logger.info('No outdated versions found, so not updating versions files');
+    }
+  }
+
+  return (
+    invalidComparisons.length === 0 &&
+    (outdatedComparisons.length === 0 || options.updateVersionsFiles)
+  );
 }

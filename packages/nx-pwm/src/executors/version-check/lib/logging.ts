@@ -1,11 +1,6 @@
-import { logger } from '@nrwl/devkit';
+import { logger, output } from '@nrwl/devkit';
 import chalk from 'chalk';
-import { VersionComparisonResult } from '../../../lib/version-check/compare-package-version-to-latest';
-/**
- * chalk.bold(
-            comparison.package
-          )
- */
+import { VersionComparisonResult } from '../../../lib/version-check';
 
 export function logVersionComparisonResults<T extends VersionComparisonResult>(
   result: Record<string, T[]>,
@@ -27,26 +22,29 @@ export function logVersionComparisonResults<T extends VersionComparisonResult>(
       continue;
     }
 
-    for (const comparison of comparisons) {
+    const findings = comparisons.flatMap((comparison) => {
       if (comparison.outdated) {
-        console.log(
-          `${logContext} ⚠️ ${formatPackageName(
-            comparison
-          )} has new version ${chalk.bold(comparison.latest)} (current: ${
-            comparison.prev
-          })`
-        );
+        return [
+          `⚠️ ${formatPackageName(comparison)} has new version ${chalk.bold(
+            comparison.latest
+          )} (current: ${comparison.prev})`,
+        ];
       }
 
       if (comparison.invalid) {
-        console.log(
-          `${logContext} ❗ ${formatPackageName(
-            comparison
-          )} has an invalid version (${comparison.prev}) specified. Latest is ${
-            comparison.latest
-          }.`
-        );
+        return [
+          `❗ ${formatPackageName(comparison)} has an invalid version (${
+            comparison.prev
+          }) specified. Latest is ${comparison.latest}.`,
+        ];
       }
-    }
+
+      return [];
+    });
+
+    output.warn({
+      title: fileName,
+      bodyLines: findings,
+    });
   }
 }

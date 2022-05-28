@@ -1,7 +1,8 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { readNxPwmConfig } from '../../lib/config';
 import { NormalizedVersionCheckOptions } from '../../lib/version-check';
-import { performVersionsFileCheck } from './lib/perform-versions-file-check';
+import { performPackageJsonCheck } from './lib/perform-package-json-check';
+import { performVersionsFilesCheck } from './lib/perform-versions-files-check';
 import { VersionCheckExecutorSchema } from './schema';
 
 function normalizeScopes(scopes: string[]) {
@@ -29,28 +30,22 @@ export default async function runExecutor(
 
   const normalizedConfig: NormalizedVersionCheckOptions = {
     versionsFiles: {
-      ...config.versionCheck.versionsFiles,
+      ...config.versionCheck?.versionsFiles,
       excludeVariables:
         config.versionCheck?.versionsFiles?.excludeVariables ?? [],
       scopes: normalizeScopes(config.versionCheck?.versionsFiles?.scopes),
     },
   };
 
-  /**
-   * TODO:
-   * - add --fix option
-   * - add package.json check
-   */
+  const success = [
+    options.checkVersionsFiles
+      ? await performVersionsFilesCheck(normalizedConfig, projectRoot, options)
+      : true,
 
-  let success = true;
-
-  if (options.checkVersionsFiles) {
-    success = await performVersionsFileCheck(
-      normalizedConfig,
-      projectRoot,
-      options
-    );
-  }
+    options.checkPackageJson
+      ? await performPackageJsonCheck(projectRoot)
+      : true,
+  ].every((r) => r);
 
   return { success };
 }

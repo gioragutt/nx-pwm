@@ -36,7 +36,8 @@ export function createOrUpdateMigrations(
 ) {
   const migrationsJsonPath = joinPathFragments(projectRoot, 'migrations.json');
   const migrations = readMigrationsJson(migrationsJsonPath);
-  const packageUpdates = migrations.packageJsonUpdates[versionPlaceholder];
+  const packageUpdates =
+    migrations.packageJsonUpdates[versionPlaceholder].packages;
 
   for (const comparison of comparisons) {
     if (comparison.outdated) {
