@@ -22,6 +22,32 @@
           "required": ["discrepancies", "missing"]
         }
       }
+    },
+    "versionCheck": {
+      "type": "object",
+      "properties": {
+        "versionsFiles": {
+          "type": "object",
+          "properties": {
+            "versionsFilesGlob": {
+              "type": "string",
+              "default": "**/versions.ts"
+            },
+            "scopes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "excludeVariables": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

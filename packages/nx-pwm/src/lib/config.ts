@@ -12,6 +12,13 @@ export interface NxPwmConfig {
       missing: IgnoreConfig;
     };
   };
+  versionCheck: {
+    versionsFiles: {
+      versionsFilesGlob: string;
+      scopes?: string[];
+      excludeVariables?: string[];
+    };
+  };
 }
 
 export const NX_PWM_CONFIG_PATH = '.nx-pwm.json';

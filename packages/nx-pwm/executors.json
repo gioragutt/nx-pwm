@@ -5,6 +5,11 @@
       "implementation": "./src/executors/depcheck/executor",
       "schema": "./src/executors/depcheck/schema.json",
       "description": "Runs a dependencies check on a project"
+    },
+    "version-check": {
+      "implementation": "./src/executors/version-check/executor",
+      "schema": "./src/executors/version-check/schema.json",
+      "description": "Performs checks on version of library versions supplied by a project"
     }
   }
 }
