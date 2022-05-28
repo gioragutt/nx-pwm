@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "VersionCheck executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "checkPackageJson": {
+      "type": "boolean",
+      "description": "Check for versions to bump in package.json",
+      "default": true
+    },
+    "checkVersionsFiles": {
+      "type": "boolean",
+      "description": "Check for versions to bump in versions.ts files",
+      "default": true
+    },
+    "updateMigrations": {
+      "type": "boolean",
+      "description": "Create or update the migrations.json ",
+      "default": false
+    }
+  },
+  "required": []
+}
