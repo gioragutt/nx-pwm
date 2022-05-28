@@ -1,7 +1,6 @@
 import { joinPathFragments } from '@nrwl/devkit';
 import {
   MigrationsJson,
-  PackageJsonUpdateForPackage,
   PackageJsonUpdates,
 } from 'nx/src/config/misc-interfaces';
 import {
@@ -9,12 +8,37 @@ import {
   readJsonFile,
   writeJsonFile,
 } from 'nx/src/utils/fileutils';
+import {
+  NxMigrationsConfiguration,
+  PackageJson,
+} from 'nx/src/utils/package-json';
 import { VersionComparisonResult } from './compare-package-version-to-latest';
 
 const versionPlaceholder = 'x.y.z';
 const placeholderPackageJsonUpdate: PackageJsonUpdates = {
   [versionPlaceholder]: { version: versionPlaceholder, packages: {} },
 };
+
+function ensurePackageJsonDeclaresMigrations(
+  packageJsonPath: string,
+  migrationsPath: string
+): void {
+  const packageJson = readJsonFile<PackageJson>(packageJsonPath);
+  if (typeof packageJson['nx-migrations'] === 'string') {
+    return;
+  }
+
+  const migrations: NxMigrationsConfiguration =
+    packageJson['nx-migrations'] ?? {};
+
+  if (migrations.migrations === migrationsPath) {
+    return;
+  }
+
+  migrations.migrations = migrationsPath;
+  packageJson['nx-migrations'] = migrations;
+  writeJsonFile(packageJsonPath, packageJson);
+}
 
 function readMigrationsJson(path: string): Omit<MigrationsJson, 'version'> {
   if (!fileExists(path)) {
@@ -35,6 +59,12 @@ export function createOrUpdateMigrations(
   comparisons: VersionComparisonResult[]
 ) {
   const migrationsJsonPath = joinPathFragments(projectRoot, 'migrations.json');
+
+  ensurePackageJsonDeclaresMigrations(
+    joinPathFragments(projectRoot, 'package.json'),
+    migrationsJsonPath
+  );
+
   const migrations = readMigrationsJson(migrationsJsonPath);
   const packageUpdates =
     migrations.packageJsonUpdates[versionPlaceholder].packages;
