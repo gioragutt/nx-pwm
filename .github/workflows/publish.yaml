@@ -1,0 +1,73 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      publishAll:
+        type: choice
+        required: true
+        description: If true, will publish all packages
+        options:
+          - 'false'
+          - 'true'
+
+      dryRun:
+        type: choice
+        required: true
+        description: If true, will not publish and push
+        options:
+          - 'false'
+          - 'true'
+
+env:
+  NX_BASE: latest
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          always-auth: true
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Setup git
+        run: |
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+
+      - name: Resolve nx command
+        id: nx-command
+        run: |
+          command=$([ "${{ github.event.inputs.publishAll }}" = "true" ] && echo "yarn nx affected" || echo "yarn nx run-many --all")
+          echo "::set-output name=value::$command"
+
+      - name: Bump versions
+        run: ${{ steps.nx-command.outputs.value }} --target=version
+
+      - name: Build packages
+        run: ${{ steps.nx-command.outputs.value }} --target=build
+
+      - name: Publish packages
+        if: ${{ github.event.inputs.dryRun == 'false' }}
+        run: ${{ steps.nx-command.outputs.value }} --target=publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISHING_TOKEN }}
+
+      - run: git push --follow-tags origin master
+        if: ${{ github.event.inputs.dryRun == 'false' }}
+
+      - name: Update 'latest' tag
+        uses: EndBug/latest-tag@latest
+        if: ${{ github.event.inputs.dryRun == 'false' }}
