@@ -51,7 +51,7 @@ jobs:
       - name: Resolve nx command
         id: nx-command
         run: |
-          command=$([ "${{ github.event.inputs.publishAll }}" = "true" ] && echo "yarn nx affected" || echo "yarn nx run-many --all")
+          command=$([ "${{ github.event.inputs.publishAll }}" = "true" ] && echo "yarn nx run-many --all" || echo "yarn nx affected")
           echo "::set-output name=value::$command"
 
       - name: Bump versions
