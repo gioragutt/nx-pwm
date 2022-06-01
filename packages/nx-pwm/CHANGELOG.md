@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.4](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.3...nx-pwm-0.2.4) (2022-06-01)
+
+
+### Bug Fixes
+
+* **nx-pwm:** config-schema.json was not included in the build ([8bc1316](https://github.com/gioragutt/nx-pwm/commit/8bc1316a45ffe3abd6675d34c2351ba6fca6f7d0))
+
 ### [0.2.3](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.2...nx-pwm-0.2.3) (2022-06-01)
 
 ### Bug Fixes
