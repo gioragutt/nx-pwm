@@ -39,6 +39,7 @@
     "eslint-config-prettier": "8.1.0",
     "husky": "^7.0.4",
     "jest": "27.5.1",
+    "lint-staged": "^13.0.0",
     "ngx-deploy-npm": "^3.1.9",
     "nx": "14.1.9",
     "prettier": "^2.5.1",
@@ -51,5 +52,8 @@
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
+  },
+  "lint-staged": {
+    "*.{json,md,js,ts,jsx,tsx,css}": "prettier --write"
   }
 }
