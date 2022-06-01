@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.3](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.2...nx-pwm-0.2.3) (2022-06-01)
+
+### Bug Fixes
+
+- **nx-pwm:** make vesion-check not fail by default if something is found ([b641660](https://github.com/gioragutt/nx-pwm/commit/b6416602a22e07acd700db9d2964481bf5aa19c1))
+
 ### [0.2.2](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.1...nx-pwm-0.2.2) (2022-06-01)
 
 ### Bug Fixes
