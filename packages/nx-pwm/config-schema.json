@@ -2,6 +2,9 @@
   "$schema": "http://json-schema.org/schema",
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "versionType": {
       "type": "string",
       "enum": ["synced", "independent"]
@@ -69,5 +72,6 @@
       }
     }
   },
+  "additionalProperties": false,
   "required": ["versionType", "depcheck"]
 }

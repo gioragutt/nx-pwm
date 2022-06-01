@@ -31,6 +31,7 @@
     "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "~5.18.0",
     "@typescript-eslint/parser": "~5.18.0",
+    "ajv": "^8.11.0",
     "chalk": "^4.1.2",
     "commitizen": "^4.2.4",
     "depcheck": "^1.4.3",

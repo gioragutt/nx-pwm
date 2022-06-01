@@ -1,8 +1,12 @@
 import { readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import Ajv from 'ajv';
+import configSchema from '../../../config-schema.json';
 import { VersionType } from '../../lib/config';
 import { depcheckVersion, verdaccioVersion } from '../../utils/versions';
 import generator from './generator';
+
+const ajv = new Ajv();
 
 describe('install generator', () => {
   let tree: Tree;
@@ -16,7 +20,9 @@ describe('install generator', () => {
     async (versionType) => {
       await generator(tree, { versionType });
 
-      expect(readJson(tree, '.nx-pwm.json')).toMatchObject({
+      const config = readJson(tree, '.nx-pwm.json');
+
+      expect(config).toMatchObject({
         $schema: './node_modules/nx-pwm/config-schema.json',
         versionType,
         depcheck: {
@@ -30,6 +36,10 @@ describe('install generator', () => {
           },
         },
       });
+
+      const validate = ajv.compile(configSchema);
+      validate(config);
+      expect(validate.errors).toBeFalsy();
     }
   );
 

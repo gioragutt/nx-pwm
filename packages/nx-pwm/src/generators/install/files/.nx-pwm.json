@@ -10,8 +10,5 @@
         "*": []
       }
     }
-  },
-  "local-registry": {
-    "verdaccioConfig": "./.verdaccio/config.yml"
   }
 }
