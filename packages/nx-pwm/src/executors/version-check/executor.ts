@@ -37,7 +37,7 @@ export default async function runExecutor(
     },
   };
 
-  const success = [
+  const checksSucceeded = [
     options.checkVersionsFiles
       ? await performVersionsFilesCheck(normalizedConfig, projectRoot, options)
       : true,
@@ -46,6 +46,8 @@ export default async function runExecutor(
       ? await performPackageJsonCheck(projectRoot)
       : true,
   ].every((r) => r);
+
+  const success = checksSucceeded || !options.failIfChecksFail;
 
   return { success };
 }

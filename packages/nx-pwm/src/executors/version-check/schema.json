@@ -15,6 +15,11 @@
       "description": "Check for versions to bump in versions.ts files",
       "default": true
     },
+    "failIfChecksFail": {
+      "type": "boolean",
+      "description": "Fail if any of the checks fail",
+      "default": false
+    },
     "updateMigrations": {
       "type": "boolean",
       "description": "Create or update the migrations.json",
