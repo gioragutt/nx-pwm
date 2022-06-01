@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.2](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.1...nx-pwm-0.2.2) (2022-06-01)
+
+
+### Bug Fixes
+
+* **nx-pwm:** improve error message when running commands without having a config file ([e5332ea](https://github.com/gioragutt/nx-pwm/commit/e5332ea7b5a126f9fda9e681cca2bb1eaababc18))
+
 ### [0.2.1](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.0...nx-pwm-0.2.1) (2022-06-01)
 
 ## [0.2.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.1.0...nx-pwm-0.2.0) (2022-06-01)
