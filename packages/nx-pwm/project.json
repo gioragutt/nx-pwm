@@ -35,6 +35,11 @@
             "input": "./packages/nx-pwm",
             "glob": "config-schema.json",
             "output": "."
+          },
+          {
+            "input": "./packages/nx-pwm",
+            "glob": "migrations.json",
+            "output": "."
           }
         ]
       }

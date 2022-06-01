@@ -1,0 +1,10 @@
+{
+  "generators": {
+    "0.2.5-remove-local-registry-field-from-config": {
+      "version": "0.2.5",
+      "description": "Remove the \"local-registry\" field from .nx-pwm.json, as it is not a valid field",
+      "cli": "nx",
+      "implementation": "./src/migrations/0.2.5-remove-local-registry-field-from-config/0.2.5-remove-local-registry-field-from-config"
+    }
+  }
+}

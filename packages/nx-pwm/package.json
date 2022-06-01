@@ -6,6 +6,9 @@
   "types": "src/index.d.ts",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "nx-migrations": {
+    "migrations": "./migrations.json"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
