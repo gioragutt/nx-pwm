@@ -35,6 +35,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org/'
           always-auth: true
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'
@@ -65,7 +66,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISHING_TOKEN }}
 
-      - run: git push --follow-tags origin master
+      - run: git push --follow-tags origin main
         if: ${{ github.event.inputs.dryRun == 'false' }}
 
       - name: Update 'latest' tag
