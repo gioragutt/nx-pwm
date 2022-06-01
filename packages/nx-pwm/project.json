@@ -30,6 +30,11 @@
             "input": "./packages/nx-pwm",
             "glob": "executors.json",
             "output": "."
+          },
+          {
+            "input": "./packages/nx-pwm",
+            "glob": "config-schema.json",
+            "output": "."
           }
         ]
       }
