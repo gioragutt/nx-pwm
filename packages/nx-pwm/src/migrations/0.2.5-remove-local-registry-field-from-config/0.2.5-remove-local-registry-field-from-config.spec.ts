@@ -9,31 +9,34 @@ describe('0.2.5-remove-local-registry-field-from-config', () => {
     tree = createTree();
   });
 
-  it('should run successfully', async () => {
-    const goodSchema = {
-      $schema: './node_modules/nx-pwm/config-schema.json',
-      versionType: 'independent',
-      depcheck: {
-        ignore: {
-          discrepancies: {
-            '*': [],
-          },
-          missing: {
-            '*': [],
+  it.each(['local-registry', 'localRegistry'])(
+    'should run successfully',
+    async (field) => {
+      const goodSchema = {
+        $schema: './node_modules/nx-pwm/config-schema.json',
+        versionType: 'independent',
+        depcheck: {
+          ignore: {
+            discrepancies: {
+              '*': [],
+            },
+            missing: {
+              '*': [],
+            },
           },
         },
-      },
-    };
+      };
 
-    writeJson(tree, '.nx-pwm.json', {
-      ...goodSchema,
-      'local-registry': {
-        some: 'thing',
-      },
-    });
+      writeJson(tree, '.nx-pwm.json', {
+        ...goodSchema,
+        [field]: {
+          some: 'thing',
+        },
+      });
 
-    generator(tree);
+      generator(tree);
 
-    expect(readJson(tree, '.nx-pwm.json')).toStrictEqual(goodSchema);
-  });
+      expect(readJson(tree, '.nx-pwm.json')).toStrictEqual(goodSchema);
+    }
+  );
 });

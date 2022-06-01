@@ -1,7 +1,7 @@
 import { readJson, Tree, updateJson } from '@nrwl/devkit';
 
 const configPath = '.nx-pwm.json';
-const fieldToRemove = 'local-registry';
+const fieldsToRemove = ['local-registry', 'localRegistry'];
 
 export default function update(tree: Tree) {
   if (!tree.exists(configPath)) {
@@ -9,12 +9,12 @@ export default function update(tree: Tree) {
   }
 
   const config = readJson(tree, configPath);
-  if (!(fieldToRemove in config)) {
+  if (!fieldsToRemove.some((field) => field in config)) {
     return;
   }
 
   updateJson(tree, configPath, (json) => {
-    delete json[fieldToRemove];
+    fieldsToRemove.forEach((field) => delete json[field]);
     return json;
   });
 }
