@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.5](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.4...nx-pwm-0.2.5) (2022-06-01)
+
+### Bug Fixes
+
+- **nx-pwm:** create a migration that removes the local-registry field from .nx-pwm.json ([20dbe26](https://github.com/gioragutt/nx-pwm/commit/20dbe26fd59ec132264258286bf09a9d20f626ec))
+- **nx-pwm:** removed unexisting field from config file template ([b6c93d9](https://github.com/gioragutt/nx-pwm/commit/b6c93d955f4bdf085f6ddc9bbb8128cf82b179c9))
+
 ### [0.2.4](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.3...nx-pwm-0.2.4) (2022-06-01)
 
 ### Bug Fixes
