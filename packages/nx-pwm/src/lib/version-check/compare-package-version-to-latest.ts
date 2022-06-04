@@ -1,9 +1,6 @@
 import { logger } from '@nrwl/devkit';
-import { exec } from 'child_process';
-import { gt, coerce } from 'semver';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { coerce, gt } from 'semver';
+import { execAsync } from '../../utils/exec';
 
 export interface VersionComparisonResult {
   package: string;

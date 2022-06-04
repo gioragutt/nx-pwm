@@ -76,6 +76,13 @@
       "options": {
         "access": "public"
       }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node dist/packages/nx-pwm/src/index.js"
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []

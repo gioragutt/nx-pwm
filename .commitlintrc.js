@@ -14,7 +14,7 @@ module.exports = {
   },
   prompt: {
     settings: {
-      enableMultipleScopes: true,
+      // enableMultipleScopes: true,
     },
   },
 };

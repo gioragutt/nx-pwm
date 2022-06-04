@@ -4,6 +4,9 @@
   "description": "CLI and Plugin to manage NX package workspaces",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "bin": {
+    "nx-pwm": "src/cli.js"
+  },
   "generators": "./generators.json",
   "executors": "./executors.json",
   "nx-migrations": {

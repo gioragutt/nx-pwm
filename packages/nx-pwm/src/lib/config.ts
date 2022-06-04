@@ -20,6 +20,9 @@ export interface NxPwmConfig {
       excludeVariables?: string[];
     };
   };
+  localRegistry: {
+    verdaccioConfig: string;
+  };
 }
 
 export const NX_PWM_CONFIG_PATH = '.nx-pwm.json';

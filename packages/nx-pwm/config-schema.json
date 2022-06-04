@@ -51,6 +51,16 @@
           }
         }
       }
+    },
+    "localRegistry": {
+      "type": "object",
+      "properties": {
+        "verdaccioConfig": {
+          "type": "string",
+          "description": "Path to the verdaccio config file"
+        }
+      },
+      "required": ["verdaccioConfig"]
     }
   },
   "definitions": {
@@ -73,5 +83,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["versionType", "depcheck"]
+  "required": ["versionType", "depcheck", "localRegistry"]
 }
