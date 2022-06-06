@@ -1,13 +1,13 @@
 import { detectPackageManager, output, PackageManager } from '@nrwl/devkit';
 import { existsSync, readFileSync } from 'fs';
 
-const lockFiles: Record<PackageManager, string> = {
+export const lockFiles: Record<PackageManager, string> = {
   npm: 'package-lock.json',
   pnpm: 'pnpm-lock.yaml',
   yarn: 'yarn.lock',
 };
 
-const registries: Record<PackageManager, string> = {
+export const registries: Record<PackageManager, string> = {
   npm: 'registry.npmjs.org',
   pnpm: 'registry.npmjs.org', // TODO: validate this,
   yarn: 'registry.yarnpkg.com',

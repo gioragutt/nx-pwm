@@ -5,6 +5,12 @@
       "description": "Remove the \"local-registry\" field from .nx-pwm.json, as it is not a valid field",
       "cli": "nx",
       "implementation": "./src/migrations/0.2.5-remove-local-registry-field-from-config/0.2.5-remove-local-registry-field-from-config"
+    },
+    "0.2.6-convert-local-registry-to-cli-command": {
+      "version": "0.2.6",
+      "description": "Convert local-registry script to be cli instead",
+      "cli": "nx",
+      "implementation": "./src/migrations/0.2.6-convert-local-registry-to-cli-command/0.2.6-convert-local-registry-to-cli-command"
     }
   }
 }

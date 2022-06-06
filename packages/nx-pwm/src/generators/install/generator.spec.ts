@@ -1,7 +1,13 @@
-import { readJson, Tree } from '@nrwl/devkit';
+import {
+  getPackageManagerCommand,
+  PackageManager,
+  readJson,
+  Tree,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import Ajv from 'ajv';
 import configSchema from '../../../config-schema.json';
+import { lockFiles } from '../../lib/check-lock-file';
 import { VersionType } from '../../lib/config';
 import { depcheckVersion, verdaccioVersion } from '../../utils/versions';
 import generator from './generator';
@@ -22,7 +28,7 @@ describe('install generator', () => {
 
       const config = readJson(tree, '.nx-pwm.json');
 
-      expect(config).toMatchObject({
+      expect(config).toStrictEqual({
         $schema: './node_modules/nx-pwm/config-schema.json',
         versionType,
         depcheck: {
@@ -34,6 +40,9 @@ describe('install generator', () => {
               '*': [],
             },
           },
+        },
+        localRegistry: {
+          verdaccioConfig: '.verdaccio/config.yml',
         },
       });
 
@@ -48,20 +57,30 @@ describe('install generator', () => {
 
     expect(tree.exists('.verdaccio/config.yml')).toBeTruthy();
     expect(tree.exists('.verdaccio/htpasswd')).toBeTruthy();
-    expect(tree.exists('tools/local-registry.sh')).toBeTruthy();
   });
 
-  it('should update package.json correctly', async () => {
-    await generator(tree, { versionType: 'independent' });
+  /**
+   * pnpm not checked because the pmc code runs things with execSync
+   */
+  const packageManagersToCheck: PackageManager[] = ['npm', 'yarn'];
 
-    expect(readJson(tree, 'package.json')).toMatchObject({
-      scripts: {
-        'local-registry': './tools/local-registry.sh',
-      },
-      devDependencies: {
-        depcheck: depcheckVersion,
-        verdaccio: verdaccioVersion,
-      },
-    });
-  });
+  it.each(packageManagersToCheck)(
+    'should update package.json correctly',
+    async (pm) => {
+      tree.write(lockFiles[pm], 'something');
+      const { exec } = getPackageManagerCommand(pm);
+
+      await generator(tree, { versionType: 'independent' });
+
+      expect(readJson(tree, 'package.json')).toMatchObject({
+        scripts: {
+          'local-registry': `${exec} nx-pwm local-registry`,
+        },
+        devDependencies: {
+          depcheck: depcheckVersion,
+          verdaccio: verdaccioVersion,
+        },
+      });
+    }
+  );
 });

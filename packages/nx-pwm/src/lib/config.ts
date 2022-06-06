@@ -13,8 +13,8 @@ export interface NxPwmConfig {
       missing: IgnoreConfig;
     };
   };
-  versionCheck: {
-    versionsFiles: {
+  versionCheck?: {
+    versionsFiles?: {
       versionsFilesGlob: string;
       scopes?: string[];
       excludeVariables?: string[];

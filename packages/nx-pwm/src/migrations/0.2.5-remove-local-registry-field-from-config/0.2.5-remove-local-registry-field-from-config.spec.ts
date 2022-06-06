@@ -12,7 +12,7 @@ describe('0.2.5-remove-local-registry-field-from-config', () => {
   it.each(['local-registry', 'localRegistry'])(
     'should run successfully',
     async (field) => {
-      const goodSchema = {
+      const goodConfig = {
         $schema: './node_modules/nx-pwm/config-schema.json',
         versionType: 'independent',
         depcheck: {
@@ -28,7 +28,7 @@ describe('0.2.5-remove-local-registry-field-from-config', () => {
       };
 
       writeJson(tree, '.nx-pwm.json', {
-        ...goodSchema,
+        ...goodConfig,
         [field]: {
           some: 'thing',
         },
@@ -36,7 +36,7 @@ describe('0.2.5-remove-local-registry-field-from-config', () => {
 
       generator(tree);
 
-      expect(readJson(tree, '.nx-pwm.json')).toStrictEqual(goodSchema);
+      expect(readJson(tree, '.nx-pwm.json')).toStrictEqual(goodConfig);
     }
   );
 });

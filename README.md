@@ -79,4 +79,4 @@ Commands:
 
 As you use a local registry, references to it might end up in your workspace's package manager lock file (`package-lock.json/yarn.lock/pnpm-lock.yaml`).
 
-To help prevent from local registry references ending up being pushed to your git remote, `nx-pwm` provides a command that validates that your lock file does not contain such references,
+To help prevent from local registry references ending up being pushed to your git remote, `nx-pwm` provides a command that validates that your lock file does not contain such references.

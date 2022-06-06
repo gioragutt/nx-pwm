@@ -5,9 +5,9 @@ import {
   installPackagesTask,
   joinPathFragments,
   Tree,
-  updateJson,
 } from '@nrwl/devkit';
 import { depcheckVersion, verdaccioVersion } from '../../utils/versions';
+import { addLocalRegistryNpmScript } from './lib/add-local-registry-npm-script';
 import { InstallGeneratorSchema } from './schema';
 
 function addFiles(tree: Tree, options: InstallGeneratorSchema) {
@@ -38,11 +38,7 @@ export async function installGenerator(
     }
   );
 
-  updateJson(tree, 'package.json', (json) => {
-    json.scripts ??= {};
-    json.scripts['local-registry'] = './tools/local-registry.sh';
-    return json;
-  });
+  addLocalRegistryNpmScript(tree);
 
   await formatFiles(tree);
 
