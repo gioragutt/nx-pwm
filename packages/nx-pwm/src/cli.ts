@@ -3,6 +3,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as localRegistry from './lib/local-registry';
+import * as checkLockFile from './lib/check-lock-file';
 
 const EPILOGUE = `For more information, see https://github.com/gioragutt/nx-pwm`;
 
@@ -31,9 +32,7 @@ yargs(hideBin(process.argv))
             alias: 's',
             description: 'npm scope to check. omit for none',
           }),
-        (args) => {
-          localRegistry.logCurrentRegistry(args.scope);
-        }
+        localRegistry.logCurrentRegistry
       )
       .command(
         'enable',
@@ -46,6 +45,11 @@ yargs(hideBin(process.argv))
         localRegistry.disableLocalRegistry
       );
   })
+  .command(
+    'check-lock-file',
+    "checks that your workspace's package manager lock file does not reference the lock registry",
+    checkLockFile.executeLockFileCheck
+  )
   .strict()
   .recommendCommands()
   .help()

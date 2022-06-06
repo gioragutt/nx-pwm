@@ -59,7 +59,11 @@ export async function disableLocalRegistry() {
   await runOnPackageMangers((pm) => execAsync(`${pm} config delete registry`));
 }
 
-export async function logCurrentRegistry(scope: string | undefined) {
+export async function logCurrentRegistry({
+  scope,
+}: {
+  scope: string | undefined;
+}) {
   const prefix = scope ? `@${scope}:` : '';
 
   const registries = await runOnPackageMangers(async (pm) => ({

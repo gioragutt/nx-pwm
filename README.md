@@ -1,90 +1,82 @@
-# NxPwm
+# Nx PWM
 
-This project was generated using [Nx](https://nx.dev).
+`nw-pwm` (short for NX Packages Workspace Manager) is a plugin/cli that aims to provide tools to manage publishable packages in an NX Workspace.
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+It works for workspaces with independently versioned libraries, and libraries that follow the same version.
 
-🔎 **Smart, Fast and Extensible Build System**
+# Why `nx-pwm` exists?
 
-## Adding capabilities to your workspace
+`nx-pwm` is highly inspired by tooling that exist in the [NX-repo](https://github.com/nrwl/nx) itself. As I've wanted to create NX Workspaces for publishable packages, I've looked into how NX itself handles this issue, and replicated it to several workspaces.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+This worked, however it was not a scalable solution, as it required copy-pasta from one repo to another (with possible adjustments), and handling it required some more in-depth knowledge of NX, and the reasoning behind the tooling. This is not something I expect a colleague to easily fathom, as most do not have in-depth knowledge of NX.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+I wanted to make the tooling accessible to anyone, and make it as easily usable and adjustable.
+This is what `nx-pwm` is - it's an NX Plugin (Executors and Generators) and a CLI to make the aforementioned tooling easy to pick up and use, with as little knowledge of NX as possible.
 
-Below are our core plugins:
+# What is the workflow `nx-pwm` enables?
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+As mentioned before, `nx-pwm` comes to replicate (mostly) the workflow in the NX repo.
+The NX repo is a workspace consisting of many plugin packages, the `nx` package itself, and `@nrwl/devkit`, alongside whatever testing machinery needed to test all that code.
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+## Library Versions Management
 
-## Generate an application
+A primary concern for managing packages, especially in NX itself, is handling package.json dependencies versions, as well as library versions that plugins install and maintain in other NX workspaces.
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+For that, it employs 2 tools:
 
-> You can use any of the plugins above to generate applications as well.
+### 1. `depcheck` (the `nx-pwm:depcheck` executor)
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+Using the `depcheck` library, we ensure that libraries that a plugin uses are declared in `package.json`. This is especially needed in an NX workspace where dependencies exist in the workspace root, and will be available to projects without declaring them in their `package.json`.
 
-## Generate a library
+This also ensures that the versions specified in a project's package.json matches the version specified in the root package.json (if specified) semver-wise.
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+### 2. `version-check` (the `nx-pwm:version-check` executor)
 
-> You can also use any of the plugins above to generate libraries as well.
+This utility helps ensure that library versions are both up-to-date, in both `package.json`, and `versions.ts` files.
 
-Libraries are shareable across libraries and applications. They can be imported from `@nx-pwm/mylib`.
+It collects library versions from these files, and uses `npm view` to find newer available versions.
 
-## Development server
+It also allows you to update the version files with the newer versions found, as well as create/update a migration in a plugin's `migration.json`.
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+#### What are `version.ts` files?
 
-## Code scaffolding
+`versions.ts` files are a convention in NX plugins to maintain the versions strings to be used when generating or migrating projects. Such files export constants with a clear naming convention: `<libName>Version`, where `<libName>` is the library npm name camel-cased, for example:
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+```ts
+// packages/my-plugin/src/utils/versions.ts
+export const chalkVersion = '0.0.0';
+export const nrwlNodeVersion = 'x.y.z'; // @nrwl/node -> nrwlNode
+```
 
-## Build
+The `version-check` script scans such `version.ts` files, and collects the library names and their respective versions.
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Given that convention, special casing needs to be done to properly convert a variable name to the correct npm package name, specifically for packages with scopes (`"nrwlNode" === "nrwl-node" or "@nrwl/node"?`).
 
-## Running unit tests
+## Local Registry (the `nx-pwm local-registry <cmd>` cli)
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+In some cases, to properly test our packages, we'd need to publish them to a package registry and use them in a test project, for example.
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+This can be done using a local registry, which you can run on your machine and point your package manager to work with.
 
-## Running end-to-end tests
+The package registry used by the NX repo (and `nx-pwm`) is `verdaccio`.
 
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+`nx-pwm` provides CLI commands for the following actions:
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+```
+nx-pwm local-registry <command>
 
-## Understand your workspace
+local registry utilities
 
-Run `nx graph` to see a diagram of the dependencies of your projects.
+Commands:
+  nx-pwm local-registry start    start local registry
+  nx-pwm local-registry clear    clear local registry cache
+  nx-pwm local-registry status   status of package managers registry configuration
+  nx-pwm local-registry enable   enable local registry
+  nx-pwm local-registry disable  disable local registry
+```
 
-## Further help
+### Lock File Check (the `nx-pwm check-lock-file <cmd>` cli)
 
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+As you use a local registry, references to it might end up in your workspace's package manager lock file (`package-lock.json/yarn.lock/pnpm-lock.yaml`).
 
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+To help prevent from local registry references ending up being pushed to your git remote, `nx-pwm` provides a command that validates that your lock file does not contain such references,
