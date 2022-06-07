@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "title": "VersionCheck executor",
-  "description": "",
+  "description": "This executor checks for newer versions of libraries used in a project's package.json and in plugins versions.ts files",
   "type": "object",
   "properties": {
     "checkPackageJson": {

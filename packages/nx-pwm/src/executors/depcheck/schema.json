@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "title": "Depcheck executor",
-  "description": "",
+  "description": "This executor uses the `depcheck` module to scan a project's codebase and report any missing or invalid dependencies that should be in its `package.json`.",
   "type": "object",
   "properties": {
     "missing": {
