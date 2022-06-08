@@ -75,7 +75,7 @@ Commands:
   nx-pwm local-registry disable  disable local registry
 ```
 
-### Lock File Check (the `nx-pwm check-lock-file <cmd>` cli)
+### Lock File Check (the `nx-pwm check-lock-file` cli)
 
 As you use a local registry, references to it might end up in your workspace's package manager lock file (`package-lock.json/yarn.lock/pnpm-lock.yaml`).
 
