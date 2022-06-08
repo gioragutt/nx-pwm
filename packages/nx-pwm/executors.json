@@ -4,6 +4,7 @@
     "depcheck": {
       "implementation": "./src/executors/depcheck/executor",
       "schema": "./src/executors/depcheck/schema.json",
+      "hasher": "./src/executors/depcheck/hasher",
       "description": "Runs a dependencies check on a project"
     },
     "version-check": {

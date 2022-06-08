@@ -27,8 +27,12 @@ export interface NxPwmConfig {
 
 export const NX_PWM_CONFIG_PATH = '.nx-pwm.json';
 
+export function nxPwmConfigExists(): boolean {
+  return fileExists(NX_PWM_CONFIG_PATH);
+}
+
 export function readNxPwmConfig(): NxPwmConfig {
-  if (!fileExists(NX_PWM_CONFIG_PATH)) {
+  if (!nxPwmConfigExists()) {
     const { exec } = getPackageManagerCommand();
     throw new Error(
       `Could not find ${NX_PWM_CONFIG_PATH}. Please run '${exec} nx generate nx-pwm:install' to create one.`
