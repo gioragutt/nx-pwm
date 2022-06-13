@@ -23,11 +23,11 @@
     "directory": "packages/nx-pwm"
   },
   "peerDependencies": {
-    "@nrwl/devkit": "14.1.9",
-    "@nrwl/workspace": "14.1.9",
+    "@nrwl/devkit": "14.3.0",
+    "@nrwl/workspace": "14.3.0",
     "chalk": "^4.1.2",
     "glob": "7.2.3",
-    "nx": "14.1.9",
+    "nx": "14.3.0",
     "semver": "^7.3.7"
   },
   "dependencies": {
