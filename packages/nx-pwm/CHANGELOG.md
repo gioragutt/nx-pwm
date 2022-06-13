@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.5...nx-pwm-0.3.0) (2022-06-13)
+
+### Features
+
+- **nx-pwm:** add check-lock-file command ([e7bf581](https://github.com/gioragutt/nx-pwm/commit/e7bf5817bfb21a65ccc6b5b15f90bdaef4ea87fb))
+- **nx-pwm:** add the local-registry cli command ([dc8dba3](https://github.com/gioragutt/nx-pwm/commit/dc8dba332420b5d3390c645bbf79a836ba5f6478))
+- **nx-pwm:** create a custom hasher for depcheck to take the config file into consideration ([98048db](https://github.com/gioragutt/nx-pwm/commit/98048dbffca26fb0f54c109ac9ba71897d82716f))
+
+### Bug Fixes
+
+- **nx-pwm:** remove local-registry migration should remove localRegistry as well ([43364c3](https://github.com/gioragutt/nx-pwm/commit/43364c368ea6ee5caefc652462e580e30b59888c))
+
 ### [0.2.5](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.4...nx-pwm-0.2.5) (2022-06-01)
 
 ### Bug Fixes
