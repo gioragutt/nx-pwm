@@ -23,8 +23,13 @@
             }
           },
           "required": ["discrepancies", "missing"]
+        },
+        "acceptWildcardVersion": {
+          "type": "boolean",
+          "default": false
         }
-      }
+      },
+      "required": ["ignore"]
     },
     "versionCheck": {
       "type": "object",
