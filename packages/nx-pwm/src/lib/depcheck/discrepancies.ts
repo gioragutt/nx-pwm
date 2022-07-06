@@ -13,7 +13,7 @@ export function getDiscrepancies(
   config: NxPwmConfig,
   name: string,
   { dependencies = {}, peerDependencies = {} }: PackageJson,
-  { devDependencies }: PackageJson
+  rootPackageJson: PackageJson
 ) {
   function findDiscrepancies(
     projectDependencies: Record<string, string>,
@@ -52,8 +52,13 @@ export function getDiscrepancies(
     return !satisfies(rootDeps[dep], versionInProject);
   }
 
+  const rootDeps = {
+    ...rootPackageJson.devDependencies,
+    ...rootPackageJson.dependencies,
+  };
+
   return [
-    ...findDiscrepancies(dependencies, devDependencies),
-    ...findDiscrepancies(peerDependencies, devDependencies),
+    ...findDiscrepancies(dependencies, rootDeps),
+    ...findDiscrepancies(peerDependencies, rootDeps),
   ];
 }
