@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.3.1...nx-pwm-0.4.0) (2022-07-06)
+
+### Features
+
+- **nx-pwm:** add option to accept wildcard version in depcheck discrepancies check ([#18](https://github.com/gioragutt/nx-pwm/issues/18)) ([1464512](https://github.com/gioragutt/nx-pwm/commit/14645125c35366a7c55eb02240eb731495d09cb3))
+
+### Bug Fixes
+
+- **nx-pwm:** also check (non-dev) dependencies when checking for discrepancies ([#19](https://github.com/gioragutt/nx-pwm/issues/19)) ([20370ca](https://github.com/gioragutt/nx-pwm/commit/20370ca9e1278db1bbb65b99930fb7367a526eb5))
+
 ### [0.3.1](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.3.0...nx-pwm-0.3.1) (2022-06-15)
 
 ## [0.3.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.2.5...nx-pwm-0.3.0) (2022-06-13)
