@@ -12,6 +12,7 @@ export interface NxPwmConfig {
       discrepancies: IgnoreConfig;
       missing: IgnoreConfig;
     };
+    acceptWildcardVersion?: boolean;
   };
   versionCheck?: {
     versionsFiles?: {

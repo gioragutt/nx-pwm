@@ -9,44 +9,51 @@ export interface VersionDiscrepancy {
   projectVersion: string;
 }
 
-function findDiscrepancies(
-  projectDependencies: Record<string, string>,
-  rootDependencies: Record<string, string>,
-  isNotIgnored: (dep: string) => boolean
-): VersionDiscrepancy[] {
-  return Object.keys(projectDependencies)
-    .filter(isNotIgnored)
-    .filter((p) => isDiscrepancy(p, rootDependencies, projectDependencies))
-    .map((packageName) => ({
-      packageName: packageName,
-      rootVersion: rootDependencies[packageName],
-      projectVersion: projectDependencies[packageName],
-    }));
-}
-
-function isDiscrepancy(
-  dep: string,
-  rootDeps: Record<string, string>,
-  projectDependencies: Record<string, string>
-): unknown {
-  return (
-    rootDeps[dep] &&
-    projectDependencies[dep] !== rootDeps[dep] &&
-    !satisfies(rootDeps[dep], projectDependencies[dep])
-  );
-}
-
 export function getDiscrepancies(
   config: NxPwmConfig,
   name: string,
   { dependencies = {}, peerDependencies = {} }: PackageJson,
   { devDependencies }: PackageJson
 ) {
-  const isNotIgnored = (dep: string) =>
-    !isIgnored(name, dep, config.depcheck.ignore.discrepancies);
+  function findDiscrepancies(
+    projectDependencies: Record<string, string>,
+    rootDependencies: Record<string, string>
+  ): VersionDiscrepancy[] {
+    return Object.keys(projectDependencies)
+      .filter(
+        (dep) => !isIgnored(name, dep, config.depcheck.ignore.discrepancies)
+      )
+      .filter((p) => isDiscrepancy(p, rootDependencies, projectDependencies))
+      .map((packageName) => ({
+        packageName: packageName,
+        rootVersion: rootDependencies[packageName],
+        projectVersion: projectDependencies[packageName],
+      }));
+  }
+
+  function isDiscrepancy(
+    dep: string,
+    rootDeps: Record<string, string>,
+    projectDependencies: Record<string, string>
+  ): unknown {
+    const versionInProject = projectDependencies[dep];
+
+    const shouldCheckVersion =
+      rootDeps[dep] && versionInProject !== rootDeps[dep];
+
+    if (!shouldCheckVersion) {
+      return false;
+    }
+
+    if (versionInProject === '*' && !config.depcheck.acceptWildcardVersion) {
+      return false;
+    }
+
+    return !satisfies(rootDeps[dep], versionInProject);
+  }
 
   return [
-    ...findDiscrepancies(dependencies, devDependencies, isNotIgnored),
-    ...findDiscrepancies(peerDependencies, devDependencies, isNotIgnored),
+    ...findDiscrepancies(dependencies, devDependencies),
+    ...findDiscrepancies(peerDependencies, devDependencies),
   ];
 }

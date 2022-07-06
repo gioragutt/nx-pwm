@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
+    "documentation": "yarn ts-node -P tools/tsconfig.tools.json tools/generate-executor-readme.ts",
     "prepare": "husky install"
   },
   "private": true,

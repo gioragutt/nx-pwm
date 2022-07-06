@@ -26,6 +26,7 @@ function hashNxPwmConfigDepcheckSectionForProject(
       ...missingForProject,
       ...discrepanciesForAll,
       ...discrepanciesForProject,
+      `${nxPwmConfig?.depcheck?.acceptWildcardVersion ?? false}`,
     ]),
     implicitDeps: {
       [NX_PWM_CONFIG_PATH]: context.hasher.hashFile(NX_PWM_CONFIG_PATH),

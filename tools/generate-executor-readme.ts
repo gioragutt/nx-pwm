@@ -42,7 +42,10 @@ for (const [executorName, { schema: schemaPath }] of executors) {
       const { type, description } = property;
       str += `${NL}### \`${propertyName}\`${NL}${description}${NL}`;
 
-      const propertyRequired = !!schema.required?.includes(propertyName);
+      const propertyRequired = !!(schema.required as string[])?.includes(
+        propertyName
+      );
+
       const defaultValue =
         'default' in property ? `\`${property.default}\`` : '';
 
