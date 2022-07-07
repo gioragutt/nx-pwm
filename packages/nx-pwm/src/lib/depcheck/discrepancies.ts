@@ -45,7 +45,7 @@ export function getDiscrepancies(
       return false;
     }
 
-    if (versionInProject === '*' && !config.depcheck.acceptWildcardVersion) {
+    if (versionInProject === '*' && config.depcheck.acceptWildcardVersion) {
       return false;
     }
 
