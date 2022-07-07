@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.4.0...nx-pwm-0.4.1) (2022-07-07)
+
+### Bug Fixes
+
+- **nx-pwm:** acceptWildcardVersion wasn't properly checked ([67fee6b](https://github.com/gioragutt/nx-pwm/commit/67fee6bd7a2d39ee7f66044a1bf8b87123fe9085))
+
 ## [0.4.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.3.1...nx-pwm-0.4.0) (2022-07-06)
 
 ### Features
