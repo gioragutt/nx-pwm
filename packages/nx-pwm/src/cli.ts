@@ -25,7 +25,7 @@ yargs(hideBin(process.argv))
       .command(
         'status',
         'status of package managers registry configuration',
-        (builder) =>
+        (builder: yargs.Argv) =>
           builder.option('scope', {
             type: 'string',
             demandOption: false,

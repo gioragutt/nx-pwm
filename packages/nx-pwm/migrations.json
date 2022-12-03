@@ -12,5 +12,16 @@
       "cli": "nx",
       "implementation": "./src/migrations/0.2.6-convert-local-registry-to-cli-command/0.2.6-convert-local-registry-to-cli-command"
     }
+  },
+  "packageJsonUpdates": {
+    "0.5.0": {
+      "version": "0.5.0",
+      "packages": {
+        "verdaccio": {
+          "version": "5.18.0",
+          "alwaysAddToPackageJson": false
+        }
+      }
+    }
   }
 }

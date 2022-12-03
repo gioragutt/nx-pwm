@@ -37,13 +37,30 @@
       }
     }
   },
-  "targetDependencies": {
-    "version": [
-      {
-        "target": "depcheck",
-        "projects": "self"
-      }
-    ]
+  "defaultProject": "nx-pwm",
+  "targetDefaults": {
+    "version": {
+      "dependsOn": ["depcheck"]
+    },
+    "build": {
+      "inputs": ["production", "^production"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
   },
-  "defaultProject": "nx-pwm"
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/.eslintrc.json"
+    ]
+  }
 }

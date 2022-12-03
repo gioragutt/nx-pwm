@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { joinPathFragments } from '@nrwl/devkit';
 import {
   MigrationsJson,
@@ -12,6 +14,7 @@ import {
   NxMigrationsConfiguration,
   PackageJson,
 } from 'nx/src/utils/package-json';
+
 import { VersionComparisonResult } from './compare-package-version-to-latest';
 
 const versionPlaceholder = 'x.y.z';
@@ -30,6 +33,11 @@ function ensurePackageJsonDeclaresMigrations(
 
   const migrations: NxMigrationsConfiguration =
     packageJson['nx-migrations'] ?? {};
+
+  migrationsPath = `./${path.relative(
+    path.dirname(packageJsonPath),
+    migrationsPath
+  )}`;
 
   if (migrations.migrations === migrationsPath) {
     return;

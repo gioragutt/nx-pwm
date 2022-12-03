@@ -18,7 +18,7 @@ describe('install generator', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
   });
 
   it.each(['independent', 'synced'] as VersionType[])(
