@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.4.1...nx-pwm-0.5.0) (2022-12-03)
+
+### Features
+
+- **nx-pwm:** migrate to nx 15.2.4 ([5cb423d](https://github.com/gioragutt/nx-pwm/commit/5cb423d55c670130ed7566a12d97d50127b61d2e)), closes [#20](https://github.com/gioragutt/nx-pwm/issues/20)
+
 ### [0.4.1](https://github.com/gioragutt/nx-pwm/compare/nx-pwm-0.4.0...nx-pwm-0.4.1) (2022-07-07)
 
 ### Bug Fixes
